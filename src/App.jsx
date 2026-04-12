@@ -1,8 +1,8 @@
-import { Header, Footer } from "./components";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import authService from "./appwrite-backend/auth";
 import { login, logout } from "./store/authSlice";
+import { Header, Footer } from "./components/index.js";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -26,6 +26,7 @@ function App() {
       <div className="w-full block">
         <Header />
         <main>
+          {/* <Outlet /> */}
           <h1>Hello</h1>
         </main>
         <Footer />
