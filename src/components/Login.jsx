@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login as authLogin } from "../store/authSlice";
-import { Button, Input, Logo } from "../logo";
+import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
 import authService from "../appwrite-backend/auth";
 import { useForm } from "react-hook-form";
@@ -22,7 +22,7 @@ function Login() {
         navigate("/");
       }
     } catch (err) {
-      setError(err);
+      setError(err.message);
     }
   };
 
@@ -59,11 +59,10 @@ function Login() {
             {...register("email", {
               required: true,
               validate: {
-                matchPattern: (value) => {
-                  /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(
-                    value,
-                  ) || "Email address must be a valid address";
-                },
+                matchPattern: (value) =>
+                /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(
+                  value,
+                ) || "Email address must be a valid address",
               },
             })}
           />
@@ -74,11 +73,10 @@ function Login() {
             {...register("password", {
               required: true,
               validate: {
-                matchPattern: (value) => {
-                  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
-                    value,
-                  ) || "Password must be a valid";
-                },
+                matchPattern: (value) =>
+                /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
+                  value,
+                ) || "Password must be a valid",
               },
             })}
           />

@@ -1,5 +1,5 @@
 import conf from "../conf/conf";
-import { Client, Databases, Storage } from "appwrite";
+import { Client, Databases, Storage, Query, ID } from "appwrite";
 
 export class ConfigService {
     client = new Client();
@@ -14,8 +14,9 @@ export class ConfigService {
         this.bucket = new Storage(this.client);
     }
 
-    async createPost({ title, content, slug, featuredImage, status, userId }) {
+    async createPost({ title, content, slug, featuredImage, status, userId = "" }) {
         try {
+            status = status === 'active' ? true : false;
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -36,6 +37,7 @@ export class ConfigService {
 
     async updatePost(slug, { title, content, featuredImage, status, userId }) {
         try {
+            status = status === 'active' ? true : false;
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -71,23 +73,24 @@ export class ConfigService {
             return await this.databases.getDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                slug,
-                Query.equal('status', 'active'),
+                slug
             );
         } catch (error) {
-            throw error;
+            console.log("Appwrite service :: getPost :: error", error);
+            return false;
         }
     }
 
-    async getPosts() {
+    async getPosts(queries = []) {
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                Query.equal('status', 'active'),
+                queries
             );
         } catch (error) {
-            throw error;
+            console.log("Appwrite service :: getPosts :: error", error);
+            return false;
         }
     }
 

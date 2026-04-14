@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../store/authSlice";
 import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-dom";
+import { useForm } from "react-hook-form";
 
 function Signup() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ function Signup() {
   return (
     <div className="flex items-center justify-center">
       <div className="mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10">
-        <span className="inline-block w-full max-w-[100]">
+        <span className="inline-block w-full max-w-[100px]">
           <Logo width="100%" />
         </span>
       </div>
@@ -64,11 +64,10 @@ function Signup() {
             {...register("email", {
               required: true,
               validate: {
-                matchPattern: (value) => {
-                  /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(
-                    value,
-                  ) || "Email address must be a valid address";
-                },
+                matchPattern: (value) =>
+                /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(
+                  value,
+                ) || "Email address must be a valid address",
               },
             })}
           />
@@ -79,11 +78,10 @@ function Signup() {
             {...register("password", {
               required: true,
               validate: {
-                matchPattern: (value) => {
-                  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
-                    value,
-                  ) || "Password must be a valid";
-                },
+                matchPattern: (value) =>
+                /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
+                  value,
+                ) || "Password must be a valid",
               },
             })}
           />
